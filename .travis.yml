@@ -30,11 +30,14 @@ jobs:
         - &test-matrix
           stage: Test
           after_success: beaver dlang codecov
+          matrix:
+              - DIST=xenial
+              - DIST=bionic
           script:
               - set -e # Do not continue on failure
               - beaver dlang install
               - beaver dlang make -rj1 all dub-test
-        - &package-matrix
+       - &package-matrix
           stage: Build and upload packages
           if: tag IS present
           script:
